@@ -262,7 +262,8 @@ namespace Oses
         private void btnSubmitSale_Click(object sender, EventArgs e)
         {
             saleData.amount = Convert.ToInt32(txtAmount.Text);
-            if (dataHandler.submitSale(saleData)) {
+            if (dataHandler.submitSale(saleData))
+            {
                 MessageBox.Show("Venta Registrada: ");
                 resetFields("resetData");
             }

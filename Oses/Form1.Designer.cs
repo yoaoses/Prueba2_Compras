@@ -64,6 +64,7 @@
             txtAmount = new TextBox();
             btnRst = new Button();
             btnSubmitSale = new Button();
+            button1 = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             grpClient.SuspendLayout();
@@ -154,13 +155,14 @@
             // 
             // grpClient
             // 
+            grpClient.Controls.Add(button1);
             grpClient.Controls.Add(lblNumClient);
             grpClient.Controls.Add(label5);
             grpClient.Controls.Add(lblClientName);
             grpClient.Controls.Add(label3);
             grpClient.Location = new Point(360, 22);
             grpClient.Name = "grpClient";
-            grpClient.Size = new Size(428, 56);
+            grpClient.Size = new Size(428, 77);
             grpClient.TabIndex = 5;
             grpClient.TabStop = false;
             grpClient.Text = "Datos venta";
@@ -169,7 +171,7 @@
             // lblNumClient
             // 
             lblNumClient.AutoSize = true;
-            lblNumClient.Location = new Point(310, 24);
+            lblNumClient.Location = new Point(83, 50);
             lblNumClient.Name = "lblNumClient";
             lblNumClient.Size = new Size(86, 15);
             lblNumClient.TabIndex = 3;
@@ -178,7 +180,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(250, 24);
+            label5.Location = new Point(28, 50);
             label5.Name = "label5";
             label5.Size = new Size(54, 15);
             label5.TabIndex = 2;
@@ -266,7 +268,7 @@
             grpProduct.Controls.Add(lblStock);
             grpProduct.Controls.Add(lblProducto);
             grpProduct.Controls.Add(label6);
-            grpProduct.Location = new Point(361, 84);
+            grpProduct.Location = new Point(360, 105);
             grpProduct.Name = "grpProduct";
             grpProduct.Size = new Size(427, 79);
             grpProduct.TabIndex = 6;
@@ -299,7 +301,7 @@
             grpCurrentSale.Controls.Add(btnSubs);
             grpCurrentSale.Controls.Add(label7);
             grpCurrentSale.Controls.Add(txtAmount);
-            grpCurrentSale.Location = new Point(360, 169);
+            grpCurrentSale.Location = new Point(360, 190);
             grpCurrentSale.Name = "grpCurrentSale";
             grpCurrentSale.Size = new Size(428, 87);
             grpCurrentSale.TabIndex = 7;
@@ -421,7 +423,7 @@
             // 
             // btnRst
             // 
-            btnRst.Location = new Point(640, 382);
+            btnRst.Location = new Point(638, 376);
             btnRst.Name = "btnRst";
             btnRst.Size = new Size(127, 23);
             btnRst.TabIndex = 8;
@@ -431,7 +433,7 @@
             // 
             // btnSubmitSale
             // 
-            btnSubmitSale.Location = new Point(641, 272);
+            btnSubmitSale.Location = new Point(639, 294);
             btnSubmitSale.Name = "btnSubmitSale";
             btnSubmitSale.Size = new Size(126, 23);
             btnSubmitSale.TabIndex = 9;
@@ -439,11 +441,20 @@
             btnSubmitSale.UseVisualStyleBackColor = true;
             btnSubmitSale.Click += btnSubmitSale_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(261, 24);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 10;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 423);
             Controls.Add(btnSubmitSale);
             Controls.Add(btnRst);
             Controls.Add(grpCurrentSale);
@@ -507,5 +518,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnRst;
         private Button btnSubmitSale;
+        private Button button1;
     }
 }
