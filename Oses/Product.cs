@@ -13,7 +13,7 @@ namespace Oses{
         private int _stock;
         private int _price;
 
-        public Product(int incommingId, int incommingBarcode, string incommingName, int incommingPrice, int incommingStock){
+        public Product(int incommingId, int incommingBarcode, string incommingName, int incommingStock, int incommingPrice){
             id = incommingId;
             barcode = incommingBarcode;
             name = incommingName;

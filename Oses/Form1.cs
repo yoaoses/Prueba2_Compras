@@ -8,6 +8,8 @@ namespace Oses
         DataManager dataHandler = new DataManager();
         List<Customer> clientsData = new List<Customer>();
         List<Product> productData = new List<Product>();
+        SaleManager currentSale = new SaleManager();
+        Transaction saleData = new Transaction();
         public Form1()
         {
             InitializeComponent();
@@ -16,18 +18,10 @@ namespace Oses
         {
             clientsData = dataHandler.GetAllCustomers();
             productData = dataHandler.GetAllProducts();
-            resetFields();
+            resetFields("");
         }
-        private void resetFields()
-        {
-            txtClientSearch.Text = string.Empty;
-            loadCustomers(clientsData);
-            loadProducts(productData);
-            lblDatosCliente.Text = string.Empty;
-            lblPrice.Text = string.Empty;
-            lblStock.Text= string.Empty;
-            lblProducto.Text = string.Empty;
-        }
+
+        //--controladores de listas
         private void loadCustomers(List<Customer> clients)
         {
             lstCustomers.Items.Clear();
@@ -59,6 +53,17 @@ namespace Oses
                 }
             }
         }
+        private void txtClientSearch_Click(object sender, EventArgs e)
+        {
+            txtClientSearch.SelectAll();
+        }
+        private void txtProductSearch_Click(object sender, EventArgs e)
+        {
+            txtProductSearch.SelectAll();
+        }
+        //--------------------------
+
+        //--escalabilidad--
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (txtClientSearch.Text.Length >= 3)
@@ -75,13 +80,9 @@ namespace Oses
                 loadCustomers(clientsData);
             }
         }
-        private void txtClientSearch_Click(object sender, EventArgs e)
-        {
-            txtClientSearch.SelectAll();
-        }
         private void txtProductSearch_TextChanged(object sender, EventArgs e)
         {
-            if (txtClientSearch.Text.Length >= 3)
+            if (txtProductSearch.Text.Length >= 3)
             {
                 List<Product> filtered = new List<Product>();
                 filtered = productData.Where(item => item.name.StartsWith(Convert.ToString(txtProductSearch.Text), StringComparison.OrdinalIgnoreCase)).ToList();
@@ -95,23 +96,179 @@ namespace Oses
                 loadProducts(productData);
             }
         }
-        private void txtProductSearch_Click(object sender, EventArgs e)
-        {
-            txtProductSearch.SelectAll();
-        }
+        //-----------------
 
+        //--comportamientos listboxes--
         private void lstCustomers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            grpClient.Enabled = true;
             Customer result = clientsData.FirstOrDefault(client => client.name == lstCustomers.SelectedItem);
-            lblDatosCliente.Text = result.name + ", " + result.number;
+            lblClientName.Text = result.name;
+            lblNumClient.Text = Convert.ToString(result.number);
+            saleData.clientId = result.number;
+            if (lstProducts.SelectedItems.Count > 0)
+            {
+                calcSale();
+            }
         }
-
         private void lstProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
+            grpProduct.Enabled = true;
             Product result = productData.FirstOrDefault(item => item.name == lstProducts.SelectedItem);
-            lblProducto.Text = result.name + ", " + result.barcode;
+            lblProducto.Text = result.name;
+            lblProductCode.Text = Convert.ToString(result.barcode);
             lblPrice.Text = result.price + " c/u";
             lblStock.Text = result.stock + " unidades";
+
+            currentSale.unitValue = result.price;
+            currentSale.maxAmount = result.stock;
+            saleData.productId = result.barcode;
+            if (lstCustomers.SelectedItems.Count > 0)
+            {
+                calcSale();
+            }
         }
+        //-----------------------------
+
+        //-- habilitar venta solo si cliente y producto estan seleccionados
+        //-- sacado de https://social.msdn.microsoft.com/Forums/es-ES/245e97e9-0dc5-4099-8fe8-db02ba993964/c-como-hacer-que-un-groupbox-en-c-no-se-active-hasta-que-se-cumpla-una-condicin-?forum=vcses
+        //-- evento de -> propiedades de groupbox-> eventos -> EnabledChanged
+        private void grpClient_EnabledChanged(object sender, EventArgs e)
+        {
+            if (grpClient.Enabled && grpProduct.Enabled)
+            {
+                grpCurrentSale.Enabled = true;
+                txtAmount.Text = "1";
+                //calcSale();
+            }
+            else
+            {
+                grpCurrentSale.Enabled = false;
+            }
+        }
+        private void grpProduct_EnabledChanged(object sender, EventArgs e)
+        {
+            if (grpClient.Enabled && grpProduct.Enabled)
+            {
+                grpCurrentSale.Enabled = true;
+                txtAmount.Text = "1";
+                //calcSale();
+            }
+            else
+            {
+                grpCurrentSale.Enabled = false;
+            }
+        }
+        private void grpCurrentSale_EnabledChanged(object sender, EventArgs e)
+        {
+            txtAmount.Text = "1";
+            //calcSale();
+        }
+        private void calcSale()
+        {
+            currentSale.currentAmount = Convert.ToInt32(txtAmount.Text);
+            currentSale.calculateValues();
+
+            setSaleLabels();
+        }
+        //--------------------------------------------------------------------
+
+        //---botones---
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(txtAmount.Text) < currentSale.maxAmount)
+            {
+                //btnAdd.Enabled = true;
+                txtAmount.Text = Convert.ToString(currentSale.addOne());
+                setSaleLabels();
+            }
+            else
+            {
+                MessageBox.Show("Monto sobrepasado, existencias = " + currentSale.maxAmount);
+                //btnAdd.Enabled = false;
+            }
+        }
+
+        private void btnSubs_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(txtAmount.Text) > 1)
+            {
+                //btnSubs.Enabled = true;
+                txtAmount.Text = Convert.ToString(currentSale.subsOne());
+                setSaleLabels();
+            }
+            else
+            {
+                //btnSubs.Enabled = false;
+            }
+        }
+        //------------
+
+        //-- utilidades UI --
+        private void setSaleLabels()
+        {
+            lblTotal.Text = Convert.ToString(currentSale.calculateValues());
+            lblNoTax.Text = Convert.ToString(currentSale.unitValue * currentSale.currentAmount);
+            lblTax.Text = currentSale.taxValue + " ( 20% )";
+        }
+        private void resetFields(string action)
+        {
+            //--resetData--
+            if (action == "resetData")
+            {
+                clientsData.Clear();
+                productData.Clear();
+                clientsData = dataHandler.GetAllCustomers();
+                productData = dataHandler.GetAllProducts();
+                currentSale.reset();
+                saleData.reset();
+            }
+            //------------
+            txtClientSearch.Text = string.Empty;
+            txtProductSearch.Text = string.Empty;
+            loadCustomers(clientsData);
+            loadProducts(productData);
+
+            grpClient.Enabled = false;
+            lblNumClient.Text = string.Empty;
+            lblClientName.Text = string.Empty;
+
+            grpProduct.Enabled = false;
+            lblPrice.Text = string.Empty;
+            lblStock.Text = string.Empty;
+            lblProducto.Text = string.Empty;
+            lblProductCode.Text = string.Empty;
+
+            grpCurrentSale.Enabled = false;
+            lblTotal.Text = string.Empty;
+            lblTax.Text = string.Empty;
+            lblNoTax.Text = string.Empty;
+            txtAmount.Text = "1";
+        }
+        private void btnRst_Click(object sender, EventArgs e)
+        {
+            resetFields("resetData");
+        }
+
+        private void txtAmount_TextChanged(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(txtAmount.Text) > currentSale.maxAmount)
+            {
+                txtAmount.Text = Convert.ToString(currentSale.maxAmount);
+                calcSale();
+            }
+        }
+
+        private void btnSubmitSale_Click(object sender, EventArgs e)
+        {
+            saleData.amount = Convert.ToInt32(txtAmount.Text);
+            if (dataHandler.submitSale(saleData)) {
+                MessageBox.Show("Venta Registrada: ");
+                resetFields("resetData");
+            }
+        }
+        //------------------
+
+
     }
 }

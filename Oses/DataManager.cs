@@ -69,5 +69,39 @@ namespace Oses
             }
             return obtainedData;
         }
+        public bool submitSale(Transaction sale) {
+            bool didItWorked = false;
+            List<Product> obtainedData = new List<Product>();
+            Connector localConn = new Connector();
+            string targetTable;
+            try
+            {
+                localConn.openConn();
+                string query = "insert into COMPRA(numero,codigo,cantidad_comprada)  values (@numero,@codigo,@cantidad_comprada)";
+                SqlCommand comm = new SqlCommand(query, localConn.conn); 
+                comm.Parameters.AddWithValue("@numero", sale.clientId);
+                comm.Parameters.AddWithValue("@codigo", sale.productId);
+                comm.Parameters.AddWithValue("@cantidad_comprada", sale.amount );
+                int rowsAffected = comm.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    didItWorked = true;
+                }
+                else {
+                    MessageBox.Show("algo fallo en el camino ala base de datos ");
+                    didItWorked = false;
+                }
+            }
+            catch (Exception e)
+            {
+                didItWorked=false;
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                localConn.closeConn();
+            }
+            return didItWorked;
+        }
     }
 }
