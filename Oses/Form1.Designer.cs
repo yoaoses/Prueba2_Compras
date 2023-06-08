@@ -37,6 +37,7 @@
             txtProductSearch = new TextBox();
             label2 = new Label();
             grpClient = new GroupBox();
+            btnClientRecord = new Button();
             lblNumClient = new Label();
             label5 = new Label();
             lblClientName = new Label();
@@ -64,7 +65,7 @@
             txtAmount = new TextBox();
             btnRst = new Button();
             btnSubmitSale = new Button();
-            button1 = new Button();
+            button2 = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             grpClient.SuspendLayout();
@@ -79,7 +80,7 @@
             lstCustomers.ItemHeight = 15;
             lstCustomers.Location = new Point(6, 73);
             lstCustomers.Name = "lstCustomers";
-            lstCustomers.Size = new Size(143, 304);
+            lstCustomers.Size = new Size(143, 229);
             lstCustomers.TabIndex = 0;
             lstCustomers.SelectedIndexChanged += lstCustomers_SelectedIndexChanged;
             // 
@@ -89,7 +90,7 @@
             lstProducts.ItemHeight = 15;
             lstProducts.Location = new Point(6, 73);
             lstProducts.Name = "lstProducts";
-            lstProducts.Size = new Size(158, 304);
+            lstProducts.Size = new Size(158, 229);
             lstProducts.TabIndex = 1;
             lstProducts.SelectedIndexChanged += lstProducts_SelectedIndexChanged;
             // 
@@ -100,7 +101,7 @@
             groupBox1.Controls.Add(lstCustomers);
             groupBox1.Location = new Point(13, 22);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(155, 383);
+            groupBox1.Size = new Size(155, 309);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Clientes";
@@ -130,7 +131,7 @@
             groupBox2.Controls.Add(lstProducts);
             groupBox2.Location = new Point(184, 22);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(170, 383);
+            groupBox2.Size = new Size(170, 309);
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Productos";
@@ -155,7 +156,7 @@
             // 
             // grpClient
             // 
-            grpClient.Controls.Add(button1);
+            grpClient.Controls.Add(btnClientRecord);
             grpClient.Controls.Add(lblNumClient);
             grpClient.Controls.Add(label5);
             grpClient.Controls.Add(lblClientName);
@@ -167,6 +168,16 @@
             grpClient.TabStop = false;
             grpClient.Text = "Datos venta";
             grpClient.EnabledChanged += grpClient_EnabledChanged;
+            // 
+            // btnClientRecord
+            // 
+            btnClientRecord.Location = new Point(261, 24);
+            btnClientRecord.Name = "btnClientRecord";
+            btnClientRecord.Size = new Size(145, 41);
+            btnClientRecord.TabIndex = 10;
+            btnClientRecord.Text = "Historial de Compras";
+            btnClientRecord.UseVisualStyleBackColor = true;
+            btnClientRecord.Click += button1_Click;
             // 
             // lblNumClient
             // 
@@ -423,9 +434,9 @@
             // 
             // btnRst
             // 
-            btnRst.Location = new Point(638, 376);
+            btnRst.Location = new Point(484, 283);
             btnRst.Name = "btnRst";
-            btnRst.Size = new Size(127, 23);
+            btnRst.Size = new Size(116, 48);
             btnRst.TabIndex = 8;
             btnRst.Text = "Limpiar / Cancelar";
             btnRst.UseVisualStyleBackColor = true;
@@ -433,28 +444,30 @@
             // 
             // btnSubmitSale
             // 
-            btnSubmitSale.Location = new Point(639, 294);
+            btnSubmitSale.Location = new Point(636, 283);
             btnSubmitSale.Name = "btnSubmitSale";
-            btnSubmitSale.Size = new Size(126, 23);
+            btnSubmitSale.Size = new Size(145, 48);
             btnSubmitSale.TabIndex = 9;
             btnSubmitSale.Text = "Confirmar Compra";
             btnSubmitSale.UseVisualStyleBackColor = true;
             btnSubmitSale.Click += btnSubmitSale_Click;
             // 
-            // button1
+            // button2
             // 
-            button1.Location = new Point(261, 24);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 10;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            button2.Location = new Point(364, 283);
+            button2.Name = "button2";
+            button2.Size = new Size(116, 49);
+            button2.TabIndex = 10;
+            button2.Text = "Historiales de Compras";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 423);
+            ClientSize = new Size(800, 344);
+            Controls.Add(button2);
             Controls.Add(btnSubmitSale);
             Controls.Add(btnRst);
             Controls.Add(grpCurrentSale);
@@ -518,6 +531,7 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnRst;
         private Button btnSubmitSale;
-        private Button button1;
+        private Button btnClientRecord;
+        private Button button2;
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Oses
 {
-    internal class Transaction
+    public class Transaction
     {
    
         private int _amount;

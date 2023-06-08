@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Oses
 {
-    internal class SaleManager
+    public class SaleManager
     {
         private int _maxAmount;
         private double _tax=0.2;

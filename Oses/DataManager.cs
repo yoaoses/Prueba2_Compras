@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Oses
 {
-    internal class DataManager{
+    public class DataManager{
         public List<Customer> GetAllCustomers(){
             List<Customer> obtainedData = new List<Customer>();
             Connector localConn = new Connector();
@@ -73,7 +73,6 @@ namespace Oses
             bool didItWorked = false;
             List<Product> obtainedData = new List<Product>();
             Connector localConn = new Connector();
-            string targetTable;
             try
             {
                 localConn.openConn();
@@ -102,6 +101,31 @@ namespace Oses
                 localConn.closeConn();
             }
             return didItWorked;
+        }
+        public List<SalesRecord> getCustomerRecord(int clientNumber) {
+            List<SalesRecord> obtainedData = new List<SalesRecord>();
+            Connector localConn = new Connector();
+            try
+            {
+                localConn.openConn();
+                string query = "SELECT * FROM salesRecords(@clientNumber)";
+                SqlCommand comm = new SqlCommand(query, localConn.conn);
+                comm.Parameters.AddWithValue("@clientNumber", clientNumber);
+                SqlDataReader reader = comm.ExecuteReader();
+                while (reader.Read()) { 
+                    SalesRecord data= new SalesRecord(Convert.ToString(reader[0]), Convert.ToInt32(reader[1]), Convert.ToInt32(reader[2]));
+                    obtainedData.Add(data);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                localConn.closeConn();
+            }
+            return obtainedData;
         }
     }
 }

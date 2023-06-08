@@ -9,6 +9,7 @@ namespace Oses
         List<Customer> clientsData = new List<Customer>();
         List<Product> productData = new List<Product>();
         SaleManager currentSale = new SaleManager();
+        Customer currentCustomer = new Customer();
         Transaction saleData = new Transaction();
         public Form1()
         {
@@ -103,6 +104,7 @@ namespace Oses
         {
             grpClient.Enabled = true;
             Customer result = clientsData.FirstOrDefault(client => client.name == lstCustomers.SelectedItem);
+            currentCustomer = result;
             lblClientName.Text = result.name;
             lblNumClient.Text = Convert.ToString(result.number);
             saleData.clientId = result.number;
@@ -267,6 +269,19 @@ namespace Oses
                 MessageBox.Show("Venta Registrada: ");
                 resetFields("resetData");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<SalesRecord> obtainedData = dataHandler.getCustomerRecord(Convert.ToInt32(lblNumClient.Text));
+            ClientSalesRecord SalesRecord = new ClientSalesRecord(obtainedData, currentCustomer, clientsData);
+            SalesRecord.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ClientSalesRecord SalesRecord = new ClientSalesRecord(null, null, clientsData);
+            SalesRecord.ShowDialog();
         }
         //------------------
 

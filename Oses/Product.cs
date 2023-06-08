@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Oses{
-    internal class Product{
+    public class Product{
         private int _id;
         private int _barcode;
         private string _name;

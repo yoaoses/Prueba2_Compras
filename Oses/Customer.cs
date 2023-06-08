@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace Oses
 {
-    internal class Customer
+    public class Customer
     {
         private int _id;
         private int _number;
         private string _name;
+
+        public Customer()
+        {
+        }
 
         public Customer(int incommingId, int incommingnumber, string incommingname)
         {
@@ -24,6 +28,8 @@ namespace Oses
         public int number { get => _number; set => _number = value; }
         public string name { get => _name; set => _name = value; }
 
-        
+        public void printData() {
+            MessageBox.Show(id + ", " + number + ", " + name);
+        }
     }
 }
