@@ -36,8 +36,6 @@
             label1 = new Label();
             groupBox2 = new GroupBox();
             dataGridView1 = new DataGridView();
-            product = new DataGridViewTextBoxColumn();
-            totalValue = new DataGridViewTextBoxColumn();
             salesRecordBindingSource = new BindingSource(components);
             groupBox3 = new GroupBox();
             txtClientNumber = new TextBox();
@@ -45,6 +43,9 @@
             txtClientSearch = new TextBox();
             label3 = new Label();
             lstCustomers = new ListBox();
+            product = new DataGridViewTextBoxColumn();
+            totalValue = new DataGridViewTextBoxColumn();
+            taxCol = new DataGridViewTextBoxColumn();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -60,7 +61,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(182, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(317, 80);
+            groupBox1.Size = new Size(400, 53);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Datos Cliente";
@@ -68,7 +69,7 @@
             // lblNumClient
             // 
             lblNumClient.AutoSize = true;
-            lblNumClient.Location = new Point(120, 54);
+            lblNumClient.Location = new Point(289, 24);
             lblNumClient.Name = "lblNumClient";
             lblNumClient.Size = new Size(88, 15);
             lblNumClient.TabIndex = 3;
@@ -77,7 +78,7 @@
             // lbln
             // 
             lbln.AutoSize = true;
-            lbln.Location = new Point(60, 54);
+            lbln.Location = new Point(229, 24);
             lbln.Name = "lbln";
             lbln.Size = new Size(54, 15);
             lbln.TabIndex = 2;
@@ -86,7 +87,7 @@
             // lblClientName
             // 
             lblClientName.AutoSize = true;
-            lblClientName.Location = new Point(120, 28);
+            lblClientName.Location = new Point(82, 24);
             lblClientName.Name = "lblClientName";
             lblClientName.Size = new Size(88, 15);
             lblClientName.TabIndex = 1;
@@ -95,7 +96,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(60, 28);
+            label1.Location = new Point(22, 24);
             label1.Name = "label1";
             label1.Size = new Size(54, 15);
             label1.TabIndex = 0;
@@ -104,9 +105,9 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(dataGridView1);
-            groupBox2.Location = new Point(182, 98);
+            groupBox2.Location = new Point(182, 71);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(317, 190);
+            groupBox2.Size = new Size(400, 217);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Historial de Ventas (IVA incluido)";
@@ -116,27 +117,14 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { product, totalValue });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { product, totalValue, taxCol });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(3, 19);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(311, 168);
+            dataGridView1.Size = new Size(394, 195);
             dataGridView1.TabIndex = 0;
-            // 
-            // product
-            // 
-            product.HeaderText = "Producto";
-            product.Name = "product";
-            product.ReadOnly = true;
-            // 
-            // totalValue
-            // 
-            totalValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            totalValue.HeaderText = "importe Total";
-            totalValue.Name = "totalValue";
-            totalValue.ReadOnly = true;
             // 
             // salesRecordBindingSource
             // 
@@ -200,11 +188,34 @@
             lstCustomers.TabIndex = 0;
             lstCustomers.SelectedIndexChanged += lstCustomers_SelectedIndexChanged;
             // 
+            // product
+            // 
+            product.Frozen = true;
+            product.HeaderText = "Producto";
+            product.Name = "product";
+            product.ReadOnly = true;
+            // 
+            // totalValue
+            // 
+            totalValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            totalValue.Frozen = true;
+            totalValue.HeaderText = "Total neto";
+            totalValue.Name = "totalValue";
+            totalValue.ReadOnly = true;
+            totalValue.Width = 168;
+            // 
+            // taxCol
+            // 
+            taxCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            taxCol.HeaderText = "Total IVA";
+            taxCol.Name = "taxCol";
+            taxCol.ReadOnly = true;
+            // 
             // ClientSalesRecord
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(517, 300);
+            ClientSize = new Size(592, 300);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -234,13 +245,14 @@
         private GroupBox groupBox2;
         private DataGridView dataGridView1;
         private BindingSource salesRecordBindingSource;
-        private DataGridViewTextBoxColumn product;
-        private DataGridViewTextBoxColumn totalValue;
         private GroupBox groupBox3;
         private TextBox txtClientSearch;
         private Label label3;
         private ListBox lstCustomers;
         private TextBox txtClientNumber;
         private Label label2;
+        private DataGridViewTextBoxColumn product;
+        private DataGridViewTextBoxColumn totalValue;
+        private DataGridViewTextBoxColumn taxCol;
     }
 }

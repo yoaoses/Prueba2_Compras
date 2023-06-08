@@ -36,7 +36,8 @@ namespace Oses
             foreach (SalesRecord sale in salesRecords)
             {
                 DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells(dataGridView1, sale.productName, sale.totalValue);
+                int tax = (int)Math.Round(sale.totalValue * 0.20);
+                row.CreateCells(dataGridView1, sale.productName, sale.totalValue,tax);
                 dataGridView1.Rows.Add(row);
             }
         }

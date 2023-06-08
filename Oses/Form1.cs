@@ -1,6 +1,8 @@
 //using System.Linq;
 //using System.Net.Http.Headers;
 
+using Microsoft.VisualBasic;
+
 namespace Oses
 {
     public partial class Form1 : Form
@@ -303,7 +305,12 @@ namespace Oses
         private void btnSubmitSale_Click(object sender, EventArgs e)
         {
             saleData.amount = Convert.ToInt32(txtAmount.Text);
-            if (dataHandler.submitSale(saleData))
+            String[] foo = lblStock.Text.Split(" ");
+            int newStock = Convert.ToInt32(foo[0]) - saleData.amount;
+            MessageBox.Show("txtamount=>" + Convert.ToInt32(txtAmount.Text));
+            MessageBox.Show("newstock=>" + newStock);
+            MessageBox.Show("saleData=>" + saleData.amount);
+            if (dataHandler.submitSale(saleData,newStock))
             {
                 MessageBox.Show("Venta Registrada: ");
                 resetFields("resetData");

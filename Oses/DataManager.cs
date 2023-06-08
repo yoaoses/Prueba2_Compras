@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 
@@ -64,37 +65,49 @@ namespace Oses
             }
             return obtainedData;
         }
-        public bool submitSale(Transaction sale) {
+        public bool submitSale(Transaction sale, int currentStock)
+        {
             bool didItWorked = false;
-            List<Product> obtainedData = new List<Product>();
             Connector localConn = new Connector();
             try
             {
                 localConn.openConn();
-                string query = "insert into COMPRA(numero,codigo,cantidad_comprada)  values (@numero,@codigo,@cantidad_comprada)";
-                SqlCommand comm = new SqlCommand(query, localConn.conn); 
+
+                // Insertar la venta en la tabla COMPRA
+                string query = "INSERT INTO COMPRA (numero, codigo, cantidad_comprada) VALUES (@numero, @codigo, @cantidad_comprada)";
+                SqlCommand comm = new SqlCommand(query, localConn.conn);
                 comm.Parameters.AddWithValue("@numero", sale.clientId);
                 comm.Parameters.AddWithValue("@codigo", sale.productId);
-                comm.Parameters.AddWithValue("@cantidad_comprada", sale.amount );
+                comm.Parameters.AddWithValue("@cantidad_comprada", sale.amount);
                 int rowsAffected = comm.ExecuteNonQuery();
-                if (rowsAffected > 0)
+
+                // Actualizar el stock del producto
+                query = "UPDATE Producto SET stock = @currentStock WHERE codigo = @codigo";
+                comm = new SqlCommand(query, localConn.conn);
+                comm.Parameters.AddWithValue("@currentStock", currentStock);
+                comm.Parameters.AddWithValue("@codigo", sale.productId);
+                int secondRowsAffected = comm.ExecuteNonQuery();
+
+                if (rowsAffected > 0 && secondRowsAffected > 0)
                 {
                     didItWorked = true;
                 }
-                else {
-                    MessageBox.Show("algo fallo en el camino ala base de datos ");
+                else
+                {
+                    MessageBox.Show("Algo falló en el camino a la base de datos.");
                     didItWorked = false;
                 }
             }
             catch (Exception e)
             {
-                didItWorked=false;
+                didItWorked = false;
                 MessageBox.Show(e.Message);
             }
             finally
             {
                 localConn.closeConn();
             }
+
             return didItWorked;
         }
         public List<SalesRecord> getCustomerRecord(int clientNumber) {
