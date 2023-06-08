@@ -40,6 +40,8 @@
             totalValue = new DataGridViewTextBoxColumn();
             salesRecordBindingSource = new BindingSource(components);
             groupBox3 = new GroupBox();
+            txtClientNumber = new TextBox();
+            label2 = new Label();
             txtClientSearch = new TextBox();
             label3 = new Label();
             lstCustomers = new ListBox();
@@ -142,6 +144,8 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(txtClientNumber);
+            groupBox3.Controls.Add(label2);
             groupBox3.Controls.Add(txtClientSearch);
             groupBox3.Controls.Add(label3);
             groupBox3.Controls.Add(lstCustomers);
@@ -152,9 +156,26 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Clientes";
             // 
+            // txtClientNumber
+            // 
+            txtClientNumber.Location = new Point(6, 42);
+            txtClientNumber.Name = "txtClientNumber";
+            txtClientNumber.Size = new Size(143, 23);
+            txtClientNumber.TabIndex = 4;
+            txtClientNumber.TextChanged += txtClientNumber_TextChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 77);
+            label2.Name = "label2";
+            label2.Size = new Size(127, 15);
+            label2.TabIndex = 3;
+            label2.Text = "Busqueda por Nombre";
+            // 
             // txtClientSearch
             // 
-            txtClientSearch.Location = new Point(6, 42);
+            txtClientSearch.Location = new Point(6, 95);
             txtClientSearch.Name = "txtClientSearch";
             txtClientSearch.Size = new Size(143, 23);
             txtClientSearch.TabIndex = 2;
@@ -165,17 +186,17 @@
             label3.AutoSize = true;
             label3.Location = new Point(6, 24);
             label3.Name = "label3";
-            label3.Size = new Size(98, 15);
+            label3.Size = new Size(116, 15);
             label3.TabIndex = 1;
-            label3.Text = "Búsqueda Rapida";
+            label3.Text = "Ingrese nº de Cliente";
             // 
             // lstCustomers
             // 
             lstCustomers.FormattingEnabled = true;
             lstCustomers.ItemHeight = 15;
-            lstCustomers.Location = new Point(6, 73);
+            lstCustomers.Location = new Point(6, 133);
             lstCustomers.Name = "lstCustomers";
-            lstCustomers.Size = new Size(143, 199);
+            lstCustomers.Size = new Size(143, 139);
             lstCustomers.TabIndex = 0;
             lstCustomers.SelectedIndexChanged += lstCustomers_SelectedIndexChanged;
             // 
@@ -187,7 +208,10 @@
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ClientSalesRecord";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ClientSalesRecord";
             Load += ClientSalesRecord_Load;
             groupBox1.ResumeLayout(false);
@@ -216,5 +240,7 @@
         private TextBox txtClientSearch;
         private Label label3;
         private ListBox lstCustomers;
+        private TextBox txtClientNumber;
+        private Label label2;
     }
 }

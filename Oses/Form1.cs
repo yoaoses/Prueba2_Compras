@@ -1,5 +1,5 @@
-using System.Linq;
-using System.Net.Http.Headers;
+//using System.Linq;
+//using System.Net.Http.Headers;
 
 namespace Oses
 {
@@ -97,6 +97,41 @@ namespace Oses
                 loadProducts(productData);
             }
         }
+        private void txtClientNumber_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtClientNumber.Text.Trim();
+            if (searchText.Length > 0 && int.TryParse(searchText, out int searchNumber))
+            {
+                List<Customer> filtered = clientsData.Where(item => item.number.ToString().StartsWith(searchText)).ToList();
+                if (filtered.Count > 0)
+                {
+                    loadCustomers(filtered);
+                    //loadCustomerData(filtered[0]);
+                }
+            }
+            else
+            {
+                loadCustomers(clientsData);
+            }
+        }
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            string searchText = txtProdCode.Text.Trim();
+            if (searchText.Length > 0 && int.TryParse(searchText, out int searchNumber))
+            {
+                List<Product> filtered = productData.Where(item => item.barcode.ToString().StartsWith(searchText)).ToList();
+                if (filtered.Count > 0)
+                {
+                    loadProducts(filtered);
+                    //loadCustomerData(filtered[0]);
+                }
+            }
+            else
+            {
+                loadProducts(productData);
+            }
+        }
+
         //-----------------
 
         //--comportamientos listboxes--
@@ -227,7 +262,9 @@ namespace Oses
             }
             //------------
             txtClientSearch.Text = string.Empty;
+            txtClientNumber.Text= string.Empty;
             txtProductSearch.Text = string.Empty;
+            txtProdCode.Text= string.Empty; 
             loadCustomers(clientsData);
             loadProducts(productData);
 
@@ -245,7 +282,9 @@ namespace Oses
             lblTotal.Text = string.Empty;
             lblTax.Text = string.Empty;
             lblNoTax.Text = string.Empty;
+            txtAmount.TextChanged -= txtAmount_TextChanged;//desactivar el evento textchange para evitar que se ejecute el codigo
             txtAmount.Text = "1";
+            txtAmount.TextChanged += txtAmount_TextChanged;//reactivar el evento 
         }
         private void btnRst_Click(object sender, EventArgs e)
         {
@@ -273,16 +312,38 @@ namespace Oses
 
         private void button1_Click(object sender, EventArgs e)
         {
-            List<SalesRecord> obtainedData = dataHandler.getCustomerRecord(Convert.ToInt32(lblNumClient.Text));
-            ClientSalesRecord SalesRecord = new ClientSalesRecord(obtainedData, currentCustomer, clientsData);
+            //List<SalesRecord> obtainedData = dataHandler.getCustomerRecord(Convert.ToInt32(lblNumClient.Text));
+            ClientSalesRecord SalesRecord = new ClientSalesRecord(currentCustomer, clientsData);
             SalesRecord.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ClientSalesRecord SalesRecord = new ClientSalesRecord(null, null, clientsData);
+            ClientSalesRecord SalesRecord = new ClientSalesRecord(null, clientsData);
             SalesRecord.ShowDialog();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtProdCode_Click(object sender, EventArgs e)
+        {
+            txtProdCode.SelectAll();
+        }
+
+        private void txtClientNumber_Click(object sender, EventArgs e)
+        {
+            txtClientNumber.SelectAll();
+        }
+
+        private void txtAmount_Click(object sender, EventArgs e)
+        {
+            txtAmount.SelectAll();
+        }
+
+
         //------------------
 
 

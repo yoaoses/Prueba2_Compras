@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 
 namespace Oses
@@ -18,10 +10,9 @@ namespace Oses
         private List<SalesRecord> salesRecords;
         private Customer customerData;
         private List<Customer> customersList;
-        private DataManager dataHandler;
-        public ClientSalesRecord(List<SalesRecord> salesRecords, Customer customerData, List<Customer> customers)
+        private DataManager dataHandler = new DataManager();
+        public ClientSalesRecord(Customer customerData, List<Customer> customers)
         {
-            this.salesRecords = salesRecords;
             this.customerData = customerData;
             this.customersList = customers;
             InitializeComponent();
@@ -34,12 +25,14 @@ namespace Oses
             if (customerData != null)
             {
                 loadCustomerData(customerData);
-                loadSalesRecord(salesRecords);
+                //getAndsetSalesData();
                 lstCustomers.SelectedItem = customerData.name;
             }
         }
 
-        private void loadSalesRecord(List<SalesRecord> salesRecords) {
+        private void loadSalesRecord(List<SalesRecord> salesRecords)
+        {
+            dataGridView1.Rows.Clear();
             foreach (SalesRecord sale in salesRecords)
             {
                 DataGridViewRow row = new DataGridViewRow();
@@ -52,14 +45,19 @@ namespace Oses
             Customer result = customersList.FirstOrDefault(client => client.name == lstCustomers.SelectedItem.ToString());
             if (result != null)
             {
-                result.printData();
                 lblClientName.Text = result.name;
                 lblNumClient.Text = Convert.ToString(result.number);
-                List<SalesRecord> clientRecord=dataHandler.getCustomerRecord(result.number);
-            }
-   
-        }
+                getAndsetSalesData();
 
+
+            }
+
+        }
+        public void getAndsetSalesData()
+        {
+            List<SalesRecord> obtainedData = dataHandler.getCustomerRecord(Convert.ToInt32(lblNumClient.Text));
+            loadSalesRecord(obtainedData);
+        }
         private void txtClientSearch_TextChanged(object sender, EventArgs e)
         {
             if (txtClientSearch.Text.Length >= 3)
@@ -68,7 +66,7 @@ namespace Oses
                 filtered = customersList.Where(item => item.name.StartsWith(Convert.ToString(txtClientSearch.Text), StringComparison.OrdinalIgnoreCase)).ToList();
                 if (filtered.Count > 0)
                 {
-                    loadCustomerData(filtered[0]);
+                    loadCustomers(filtered);
                 }
             }
             else
@@ -76,10 +74,12 @@ namespace Oses
                 loadCustomers(customersList);
             }
         }
-        private void loadCustomerData(Customer customerData) { 
+        private void loadCustomerData(Customer customerData)
+        {
+
             lblClientName.Text = customerData.name;
             lblNumClient.Text = Convert.ToString(customerData.number);
-            lstCustomers.SelectedItem = customerData.name;
+            //lstCustomers.SelectedItem = customerData.name;
         }
         private void loadCustomers(List<Customer> clients)
         {
@@ -96,6 +96,25 @@ namespace Oses
                     lstCustomers.Items.Add(client.name);
                 }
             }
+        }
+
+        private void txtClientNumber_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtClientNumber.Text.Trim();
+            if (searchText.Length > 0 && int.TryParse(searchText, out int searchNumber))
+            {
+                List<Customer> filtered = customersList.Where(item => item.number.ToString().StartsWith(searchText)).ToList();
+                if (filtered.Count > 0)
+                {
+                    loadCustomers(filtered);
+                    //loadCustomerData(filtered[0]);
+                }
+            }
+            else
+            {
+                loadCustomers(customersList);
+            }
+
         }
     }
 }

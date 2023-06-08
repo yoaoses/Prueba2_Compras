@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Oses
 {
@@ -105,10 +100,11 @@ namespace Oses
         public List<SalesRecord> getCustomerRecord(int clientNumber) {
             List<SalesRecord> obtainedData = new List<SalesRecord>();
             Connector localConn = new Connector();
+            //MessageBox.Show("=>" + clientNumber);
             try
             {
                 localConn.openConn();
-                string query = "SELECT * FROM salesRecords(@clientNumber)";
+                string query = "SELECT producto.nombre, producto.precio, COMPRA.cantidad_comprada FROM Producto JOIN COMPRA ON producto.codigo = COMPRA.codigo WHERE COMPRA.numero = @clientNumber";
                 SqlCommand comm = new SqlCommand(query, localConn.conn);
                 comm.Parameters.AddWithValue("@clientNumber", clientNumber);
                 SqlDataReader reader = comm.ExecuteReader();

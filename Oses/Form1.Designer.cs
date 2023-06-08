@@ -31,9 +31,13 @@
             lstCustomers = new ListBox();
             lstProducts = new ListBox();
             groupBox1 = new GroupBox();
+            txtClientNumber = new TextBox();
+            label13 = new Label();
             txtClientSearch = new TextBox();
             label1 = new Label();
             groupBox2 = new GroupBox();
+            txtProdCode = new TextBox();
+            label14 = new Label();
             txtProductSearch = new TextBox();
             label2 = new Label();
             grpClient = new GroupBox();
@@ -78,9 +82,9 @@
             // 
             lstCustomers.FormattingEnabled = true;
             lstCustomers.ItemHeight = 15;
-            lstCustomers.Location = new Point(6, 73);
+            lstCustomers.Location = new Point(6, 118);
             lstCustomers.Name = "lstCustomers";
-            lstCustomers.Size = new Size(143, 229);
+            lstCustomers.Size = new Size(143, 184);
             lstCustomers.TabIndex = 0;
             lstCustomers.SelectedIndexChanged += lstCustomers_SelectedIndexChanged;
             // 
@@ -88,14 +92,16 @@
             // 
             lstProducts.FormattingEnabled = true;
             lstProducts.ItemHeight = 15;
-            lstProducts.Location = new Point(6, 73);
+            lstProducts.Location = new Point(6, 118);
             lstProducts.Name = "lstProducts";
-            lstProducts.Size = new Size(158, 229);
+            lstProducts.Size = new Size(158, 184);
             lstProducts.TabIndex = 1;
             lstProducts.SelectedIndexChanged += lstProducts_SelectedIndexChanged;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(txtClientNumber);
+            groupBox1.Controls.Add(label13);
             groupBox1.Controls.Add(txtClientSearch);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(lstCustomers);
@@ -106,9 +112,27 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Clientes";
             // 
+            // txtClientNumber
+            // 
+            txtClientNumber.Location = new Point(6, 37);
+            txtClientNumber.Name = "txtClientNumber";
+            txtClientNumber.Size = new Size(143, 23);
+            txtClientNumber.TabIndex = 6;
+            txtClientNumber.Click += txtClientNumber_Click;
+            txtClientNumber.TextChanged += txtClientNumber_TextChanged;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(18, 19);
+            label13.Name = "label13";
+            label13.Size = new Size(116, 15);
+            label13.TabIndex = 5;
+            label13.Text = "Ingrese nº de Cliente";
+            // 
             // txtClientSearch
             // 
-            txtClientSearch.Location = new Point(6, 42);
+            txtClientSearch.Location = new Point(6, 81);
             txtClientSearch.Name = "txtClientSearch";
             txtClientSearch.Size = new Size(143, 23);
             txtClientSearch.TabIndex = 2;
@@ -118,14 +142,16 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 24);
+            label1.Location = new Point(25, 62);
             label1.Name = "label1";
-            label1.Size = new Size(98, 15);
+            label1.Size = new Size(109, 15);
             label1.TabIndex = 1;
-            label1.Text = "Búsqueda Rapida";
+            label1.Text = "Búsqueda Nombre:";
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(txtProdCode);
+            groupBox2.Controls.Add(label14);
             groupBox2.Controls.Add(txtProductSearch);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(lstProducts);
@@ -136,9 +162,27 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Productos";
             // 
+            // txtProdCode
+            // 
+            txtProdCode.Location = new Point(6, 37);
+            txtProdCode.Name = "txtProdCode";
+            txtProdCode.Size = new Size(158, 23);
+            txtProdCode.TabIndex = 8;
+            txtProdCode.Click += txtProdCode_Click;
+            txtProdCode.TextChanged += textBox1_TextChanged_1;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(37, 19);
+            label14.Name = "label14";
+            label14.Size = new Size(87, 15);
+            label14.TabIndex = 7;
+            label14.Text = "Ingrese Código";
+            // 
             // txtProductSearch
             // 
-            txtProductSearch.Location = new Point(6, 42);
+            txtProductSearch.Location = new Point(6, 81);
             txtProductSearch.Name = "txtProductSearch";
             txtProductSearch.Size = new Size(158, 23);
             txtProductSearch.TabIndex = 3;
@@ -148,11 +192,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 24);
+            label2.Location = new Point(28, 63);
             label2.Name = "label2";
-            label2.Size = new Size(98, 15);
+            label2.Size = new Size(109, 15);
             label2.TabIndex = 3;
-            label2.Text = "Búsqueda Rapida";
+            label2.Text = "Búsqueda Nombre:";
             // 
             // grpClient
             // 
@@ -430,6 +474,7 @@
             txtAmount.Size = new Size(50, 23);
             txtAmount.TabIndex = 0;
             txtAmount.Text = "1";
+            txtAmount.Click += txtAmount_Click;
             txtAmount.TextChanged += txtAmount_TextChanged;
             // 
             // btnRst
@@ -476,7 +521,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Modulo Ventas";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -533,5 +578,9 @@
         private Button btnSubmitSale;
         private Button btnClientRecord;
         private Button button2;
+        private TextBox txtClientNumber;
+        private Label label13;
+        private TextBox txtProdCode;
+        private Label label14;
     }
 }
